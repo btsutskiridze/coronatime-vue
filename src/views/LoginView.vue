@@ -1,5 +1,10 @@
-<script setup></script>
+<script setup>
+import BaseContainer from "@/components/layout/BaseContainer.vue";
+import LoginForm from "../components/UI/forms/LoginForm.vue";
+</script>
 
 <template>
-  <h1 class="text-red-500 text-9xl">login</h1>
+  <base-container>
+    <login-form />
+  </base-container>
 </template>

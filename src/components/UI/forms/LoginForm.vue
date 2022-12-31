@@ -11,11 +11,12 @@ const handleLogin = async (values, actions) => {
   try {
     const response = await axios.post("login", values);
     const token = response.data.data.token;
-
-    Cookie.set("access_token", token, 1);
+    const days = response.data.data.expires_in;
+    Cookie.set("access_token", token, days);
     router.push({ name: "statistics" });
   } catch (e) {
     console.log(e);
+    actions.setFieldValue("password", "");
     actions.setFieldError("password", e.response.data.error);
   }
 };

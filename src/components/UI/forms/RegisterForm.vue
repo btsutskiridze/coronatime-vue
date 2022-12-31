@@ -5,15 +5,21 @@ import router from "@/router";
 import BaseInput from "@/components/layout/form/BaseInput.vue";
 import Cookie from "@/helpers/cookies";
 
-const handleRegister = async (values) => {
+const handleRegister = async (values, actions) => {
   try {
     const response = await axios.post("register", values);
     const token = response.data.data.token;
+    const days = response.data.data.expires_in;
 
-    Cookie.set("access_token", token, 1);
+    Cookie.set("access_token", token, days);
 
     router.push({ name: "statistics" });
   } catch (e) {
+    actions.setFieldValue("password", "");
+    const errors = e.response.data.errors;
+    for (let key in errors) {
+      actions.setFieldError(key, errors[key]);
+    }
     console.log(e);
   }
 };
@@ -26,7 +32,7 @@ const handleRegister = async (values) => {
       <VeeForm class="space-y-7" @submit="handleRegister">
         <base-input name="name" rules="required|min:4" />
         <base-input name="email" rules="required|email" />
-        <base-input name="password" type="password" rules="required|min:4" />
+        <base-input name="password" type="password" rules="required|min:8" />
 
         <div>
           <button

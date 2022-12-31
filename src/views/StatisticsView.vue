@@ -1,12 +1,12 @@
 <script setup>
 import { useUserStore } from "@/stores/UserStore";
-import axios from "@/config/axios";
+// import axios from "@/config/axios";
+import Cookie from "@/helpers/cookies";
 import router from "@/router";
 const userStore = useUserStore();
 const logout = async () => {
   try {
-    localStorage.removeItem("access_token");
-    delete axios.defaults.headers["Authorization"];
+    Cookie.delete("access_token");
     router.push({ name: "login" });
     userStore.user = null;
   } catch (e) {

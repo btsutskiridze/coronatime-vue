@@ -1,7 +1,7 @@
 <script setup>
 import { Form as VeeForm } from "vee-validate";
 import axios from "@/config/axios/index.js";
-
+import Cookie from "@/helpers/cookies";
 import BaseInput from "@/components/layout/form/BaseInput.vue";
 import RememberMe from "@/components/UI/RememberMe.vue";
 import ForgetPassword from "@/components/UI/ForgetPassword.vue";
@@ -12,9 +12,7 @@ const handleLogin = async (values, actions) => {
     const response = await axios.post("login", values);
     const token = response.data.data.token;
 
-    localStorage.setItem("access_token", token);
-    axios.defaults.headers["Authorization"] = `Bearer ${token}`;
-
+    Cookie.set("access_token", token, 1);
     router.push({ name: "statistics" });
   } catch (e) {
     console.log(e);
@@ -26,6 +24,7 @@ const handleLogin = async (values, actions) => {
 <template>
   <div class="flex flex-col justify-center h-full sm:px-6 lg:px-8">
     <div class="bg-white lg:max-w-md py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <h1 class="text-4xl mb-10 text-indigo-900">Login</h1>
       <VeeForm class="space-y-7" @submit="handleLogin">
         <base-input name="email" rules="required|email" />
         <base-input name="password" type="password" rules="required|min:4" />

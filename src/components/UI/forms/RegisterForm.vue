@@ -3,14 +3,14 @@ import { Form as VeeForm } from "vee-validate";
 import axios from "@/config/axios/index.js";
 import router from "@/router";
 import BaseInput from "@/components/layout/form/BaseInput.vue";
+import Cookie from "@/helpers/cookies";
 
 const handleRegister = async (values) => {
   try {
     const response = await axios.post("register", values);
     const token = response.data.data.token;
 
-    localStorage.setItem("access_token", token);
-    axios.defaults.headers["Authorization"] = `Bearer ${token}`;
+    Cookie.set("access_token", token, 1);
 
     router.push({ name: "statistics" });
   } catch (e) {

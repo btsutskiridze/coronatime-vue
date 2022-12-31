@@ -1,3 +1,4 @@
+import Cookie from "@/helpers/cookies";
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -7,7 +8,7 @@ const axiosInstance = axios.create({
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
     "X-Requested-With": "XMLHttpRequest",
-    Authorization: "Bearer " + localStorage.access_token,
+    Authorization: "Bearer " + Cookie.get("access_token"),
   },
 });
 

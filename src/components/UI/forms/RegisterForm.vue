@@ -1,13 +1,18 @@
 <script setup>
 import { Form as VeeForm } from "vee-validate";
 import axios from "@/config/axios/index.js";
-
+import router from "@/router";
 import BaseInput from "@/components/layout/form/BaseInput.vue";
 
 const handleRegister = async (values) => {
   try {
     const response = await axios.post("register", values);
-    console.log(response);
+    const token = response.data.data.token;
+
+    localStorage.setItem("access_token", token);
+    axios.defaults.headers["Authorization"] = `Bearer ${token}`;
+
+    router.push({ name: "statistics" });
   } catch (e) {
     console.log(e);
   }
@@ -19,7 +24,7 @@ const handleRegister = async (values) => {
     <div class="bg-white lg:max-w-md py-8 px-4 shadow sm:rounded-lg sm:px-10">
       <h1 class="text-4xl mb-10 text-indigo-900">Register</h1>
       <VeeForm class="space-y-7" @submit="handleRegister">
-        <base-input name="username" rules="required|min:4" />
+        <base-input name="name" rules="required|min:4" />
         <base-input name="email" rules="required|email" />
         <base-input name="password" type="password" rules="required|min:4" />
 

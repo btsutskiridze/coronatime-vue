@@ -6,6 +6,12 @@ import BaseInput from "@/components/layout/form/BaseInput.vue";
 import RememberMe from "@/components/UI/RememberMe.vue";
 import ForgetPassword from "@/components/UI/ForgetPassword.vue";
 import router from "@/router";
+import JWT from "@/helpers/jwt";
+
+var token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6ImJha2FyaSIsImlhdCI6MTUxNjIzOTAyMn0.YHsVUwjPP-f9BzEIWsWnRixfGUXe-hM09btSyIoWuaQ";
+const decoded = JWT.decode(token);
+console.log(decoded);
 
 const handleLogin = async (values, actions) => {
   try {

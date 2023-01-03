@@ -2,8 +2,8 @@
 
 <template>
   <div class="text-sm">
-    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"
-      >Forgot your password?</a
-    >
+    <p class="font-medium cursor-pointer text-indigo-600 hover:text-indigo-500">
+      Forgot your password?
+    </p>
   </div>
 </template>
